@@ -24,21 +24,17 @@ def main(args):
 		cv_image2 = cv2.drawKeypoints(cv_image2, kp2, None)
 		cv2.imshow("img1", cv_image1)
 		cv2.imshow("img2", cv_image1)
-		bf = cv2.BFMatcher(cv2.NORM_L1, crossCheck=False)
+		bf = cv2.BFMatcher(cv2.NORM_L1, crossCheck=True)
 		matches = bf.match(ds1, ds2)
-		filtered_matches = []
-		for m in matches:
-			#print(m.distance)
-			if m.distance<500:
-				filtered_matches.append(m)
-		kep1=np.float32([kp1[m.queryIdx].pt for m in filtered_matches])
-		kep2=np.float32([kp2[m.trainIdx].pt for m in filtered_matches])
+		kep1=np.float32([kp1[m.queryIdx].pt for m in matches])
+		kep2=np.float32([kp2[m.trainIdx].pt for m in matches])
 		matching_result = cv2.drawMatches(cv_image1,kp1,cv_image2,kp2,matches,None)
 		cv2.imshow("matching_result", matching_result)
 		print(kep1)
 		print(kep2)
 		print(len(kep1))
 		print(len(kep2))
+
 		cv2.waitKey()	
 		print("m out")
     except KeyboardInterrupt:
