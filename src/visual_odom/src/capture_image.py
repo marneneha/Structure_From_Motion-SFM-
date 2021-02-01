@@ -10,9 +10,11 @@ import numpy as np
 def main(args):
     rospy.init_node('image_converter', anonymous=True)
     print("i m in")
-    k =np.array([[7.188560000000e+02, 0.000000000000e+00, 6.071928000000e+02], 
-             [0.000000000000e+00, 7.188560000000e+02, 1.852157000000e+02], 
-             [0.000000000000e+00, 0.000000000000e+00, 1.000000000000e+00]])
+#K_00: 9.842439e+02 0.000000e+00 6.900000e+02 0.000000e+00 9.808141e+02 2.331966e+02 0.000000e+00 0.000000e+00 1.000000e+00
+    k =np.array([[9.842439e+02, 0.000000e+00, 6.900000e+02], 
+             [0.000000e+00, 9.808141e+02, 2.331966e+02], 
+             [0.000000e+00, 0.000000e+00, 1.000000e+00]])
+    proj = np.array([[7.215377e+02,0.000000e+00,6.095593e+02, 0.000000e+00],[0.000000e+00, 7.215377e+02, 1.728540e+02, 0.000000e+00],[0.000000e+00, 0.000000e+00, 1.000000e+00, 0.000000e+00,]])
     temp1 = "/home/neha/Downloads/2011_09_26/2011_09_26_drive_0001_sync/image_00/data/0000000000.png"
     cv_image1 = cv2.imread(temp1,cv2.IMREAD_GRAYSCALE)
     try:
@@ -42,6 +44,9 @@ def main(args):
             	E,mask=cv2.findEssentialMat(kep2,kep1,k,cv2.RANSAC,prob=0.999,threshold=0.1, mask=None)
 		retval,rmat,trans,mask=cv2.recoverPose(E,kep1,kep2,k)
 		cv_image1 = cv_image2
+		for i in range(kep1):
+			3d_pt = cv2.triangulatePoints(kep1,proj)
+		print(3d_pt)
 		print("m here")
 		print(kep1)
 		print(kep2)
