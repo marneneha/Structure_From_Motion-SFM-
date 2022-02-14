@@ -1,2 +1,0 @@
-visual_odom
--DCATKIN_DEVEL_PREFIX=/home/neha/visual_odom/devel -DCMAKE_INSTALL_PREFIX=/home/neha/visual_odom/install -G Unix Makefiles
